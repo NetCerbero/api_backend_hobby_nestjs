@@ -1,15 +1,19 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UsuarioModule } from './modules/usuario/usuario.module';
-import { UbicacionModule } from './modules/ubicacion/ubicacion.module';
-import { ArticuloModule } from './modules/articulo/articulo.module';
-import { CategoriaModule } from './modules/categoria/categoria.module';
-import { VentaModule } from './modules/venta/venta.module';
+import { DatabaseModule } from './database/database.module';
+import { ConfigModule } from './config/config.module';
+import { ConfigService } from './config/config.service';
+import { Configuration } from './config/config.keys';
 
 @Module({
-  imports: [UsuarioModule, UbicacionModule, ArticuloModule, CategoriaModule, VentaModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [DatabaseModule, ConfigModule],
 })
-export class AppModule {}
+export class AppModule {
+  static port: number | string;
+  static allowedOrigins: string[];
+  constructor(readonly _config: ConfigService) {
+    AppModule.port = this._config.get(Configuration.PORT_SERVER);
+    AppModule.allowedOrigins = [
+      ...this._config.get(Configuration.LIST_CORS).split(','),
+    ];
+  }
+}
