@@ -6,7 +6,7 @@ const config: DataSourceOptions = {
   username: 'root',
   password: '123456',
   database: 'tienda',
-  entities: ['src/*/*/*/*.entity{.ts,.js}'], //[__dirname + '\\entities\\**\\*{.ts,.js}'],
+  entities: ['src/*/*/*/*/*.entity{.ts,.js}'], //[__dirname + '\\entities\\**\\*{.ts,.js}'],
   migrations: ['src/database/migrations/*{.ts,.js}'], //[__dirname + '\\migrations\\**\\*{.ts,.js}'],
   //cli: { migrationsDir: 'src/database/migrations' },
   synchronize: false,

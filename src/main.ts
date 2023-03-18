@@ -9,6 +9,7 @@ async function bootstrap() {
 
   const options = {
     origin: (origin, callback) => {
+      console.log("origen",origin)
       if (
         !origin ||
         AppModule.allowedOrigins.some((o) => origin.startsWith(o))

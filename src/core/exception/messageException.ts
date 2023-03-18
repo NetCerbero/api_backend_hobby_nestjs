@@ -1,6 +1,6 @@
 export const MessageException = {
     DUPLICATE:"El :atributo ya se encuentra en uso.",
-    NOT_FOUND:"El registro :atributo no existe.",
+    NOT_FOUND:"No se ha encontrado el registro.",
     NOT_SAVE:"No se ha podido guardar el registro.",
     NOT_GET:"No se ha podido recuperar el registro.",
     NOT_UPDATE:"No se ha podido actualizar el registro.",
