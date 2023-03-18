@@ -7,13 +7,18 @@ export enum UserAccountStatus {
     INACTIVO = "INACTIVO"
 }
 
+export enum UserAccountType{
+    ADMIN="ADMIN",
+    BUSINESS="BUSINESS",
+}
+
 @Entity("user_account")
 export class UserAccountEntity extends BaseEntity {
     @PrimaryGeneratedColumn({ type: "bigint" })
     id: number;
 
-    @Column({ type: "bool",default:false, name:"is_admin"})
-    isAdmin: boolean;
+    @Column({ type: "varchar", length:20, default:UserAccountType.BUSINESS})
+    type: string;
 
     @Column({ type: "varchar", length: 150, unique: true })
     email: string;

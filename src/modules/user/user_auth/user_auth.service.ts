@@ -11,14 +11,14 @@ import { compare } from 'bcryptjs';
 import {
   UserAccountEntity,
   UserAccountStatus,
+  UserAccountType,
+  UserBusinessProfileEntity,
 } from '../user_account/entities/user_account.entity';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from 'src/config/config.service';
 import { Configuration } from 'src/config/config.keys';
 import { UserRefreshTokenRepository } from './repository/user_refresh_token.repository';
 import { IJwtPayload, IUserAuthSession } from './interface/user_auth_session.interface';
-import { BusinessProfileEntity } from 'src/modules/business/business_profile/entities/business_profile.entity';
-import { BusinessBranchEntity } from 'src/modules/business/business_branch/entities/business_branch.entity';
 import { isNullOrUndefined } from 'src/core/utils/extraUtils';
 
 @Injectable()
@@ -32,43 +32,35 @@ export class UserAuthService {
     private readonly userToken: UserRefreshTokenRepository,
   ) {}
 
-  async getValidateJwtAndDomain(payload: IJwtPayload,domain:{branch:string,business:any}) {
+  async getValidateJwtAndDomain(payload: IJwtPayload,domain:{business:any}) {
     const user = await this.userService.findUserById(payload.userId);
     await this.checkStatus(user);
     await this.checkSessionByIdAndUser(payload.sessionId, payload.userId);
-
-    if (
-      !user.isAdmin &&
-      isNullOrUndefined(domain.business) &&
-      isNullOrUndefined(domain.branch)
-    ) {
-      await this.isInBusiness(
+    
+    //not admin + not business null => true empresa
+    if(user.type===UserAccountType.BUSINESS){
+      if(isNullOrUndefined(domain.business)) throw new ConflictException("Ups!, debe elegir un dominio");
+      const find = await this.getBusinessSelected(
         domain.business,
-        user.business.map((b) => b.businessProfile),
+        user.business
       );
-      await this.isBranchOwnBusiness(
-        domain.branch,
-        domain.business,
-        user.branches.map((b) => b.businessBranch),
-      );
+      if(!find) throw new ConflictException("Ups!, no tiene acceso a este dominio.");
     }
 
     return {
       ...payload,
-      permission: [],
+      permissions: ['hambre',"category_create"],
       tenantId: domain.business,
-      branchId: domain.branch,
-      isAdmin: user.isAdmin,
+      type: user.type,
     } as IUserAuthSession;
   }
 
-  async isInBusiness(business: number, listBusiness: BusinessProfileEntity[]) {
-    const isCorrect = listBusiness.some((lb) => lb.id === business);
-    if(!isCorrect) throw new ConflictException("Ups!, no tiene acceso a este dominio.");
+  private async getBusinessSelected(business: number, listBusiness: UserBusinessProfileEntity[]) {
+    return  listBusiness.find((lb) => lb.businessProfileId === business && lb.default );
   }
 
-  async isBranchOwnBusiness(
-    branch: number,
+/*   async isBranchOwnBusiness(
+    branch: any,
     business: any,
     listBranches: BusinessBranchEntity[],
   ) {
@@ -77,16 +69,16 @@ export class UserAuthService {
     );
 
     if(!isCorrect) throw new ConflictException("Ups!, ambos debes ser del mismo dominio.");
-  }
+  } */
 
-  async checkSessionByIdAndUser(sessionId: string, userId: any) {
+  private async checkSessionByIdAndUser(sessionId: string, userId: any) {
     const session = await this.userToken.getByIdAndUser(sessionId, userId);
     if (!session) throw new ConflictException('Ups!, session inválida.');
-    if (session.expiration > new Date())
+    if (new Date() > session.expiration )
       throw new ConflictException('Ups!, token inválido.');
   }
 
-  async checkStatus(user: UserAccountEntity) {
+  private async checkStatus(user: UserAccountEntity) {
     if (user.status === UserAccountStatus.INACTIVO)
       throw new ConflictException('Ups!, cuenta no disponible.');
   }

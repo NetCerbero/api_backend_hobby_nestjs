@@ -3,10 +3,9 @@ export interface IUserAuthSession {
   sessionId: string;
   email: string;
   displayName: string;
-  permission: string[];
+  permissions: string[];
   tenantId?: any;
-  branchId?: any;
-  isAdmin: boolean;
+  type: string;
 }
 
 export interface IJwtPayload {

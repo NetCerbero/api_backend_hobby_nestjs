@@ -22,10 +22,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(req: Request, payload: IJwtPayload) {
     const business = req.headers['x-tenant-id'];
-    const branch = req.headers['x-branch-id'];
     const validate = await this._authService.getValidateJwtAndDomain(payload, {
-      business,
-      branch,
+      business: ['', 'null', 'undefined'].includes(business) ? null : business,
     });
     return validate;
   }
