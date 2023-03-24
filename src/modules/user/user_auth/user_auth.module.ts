@@ -2,7 +2,11 @@ import { Module } from '@nestjs/common';
 import { UserAuthService } from './user_auth.service';
 import { UserAuthController } from './user_auth.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserAccountEntity, UserBusinessBranchEntity, UserBusinessProfileEntity } from '../user_account/entities/user_account.entity';
+import {
+  UserAccountEntity,
+  UserBusinessBranchEntity,
+  UserBusinessProfileEntity,
+} from '../user_account/entities/user_account.entity';
 import { UserAccountService } from '../user_account/user_account.service';
 import { UserAccountRepository } from '../user_account/repository/user_acount.repository';
 import { UserBusinessBranchRepository } from '../user_account/repository/user_business_branch.repository';
@@ -31,11 +35,24 @@ import { JwtStrategy } from './strategy/jwt.strategy';
         };
       },
     }),
-    TypeOrmModule.forFeature([UserAccountEntity, UserBusinessBranchEntity, UserBusinessProfileEntity, UserRefreshTokenEntity])],
+    TypeOrmModule.forFeature([
+      UserAccountEntity,
+      UserBusinessBranchEntity,
+      UserBusinessProfileEntity,
+      UserRefreshTokenEntity,
+    ]),
+  ],
   controllers: [UserAuthController],
-  providers: [UserRefreshTokenRepository, UserAccountRepository, UserBusinessBranchRepository,
-    UserBusinessProfileRepository, UserAuthService, JwtStrategy,
-    UserAccountService, ConfigService],
+  providers: [
+    UserRefreshTokenRepository,
+    UserAccountRepository,
+    UserBusinessBranchRepository,
+    UserBusinessProfileRepository,
+    UserAuthService,
+    JwtStrategy,
+    UserAccountService,
+    ConfigService,
+  ],
   exports: [JwtModule],
 })
-export class UserAuthModule { }
+export class UserAuthModule {}

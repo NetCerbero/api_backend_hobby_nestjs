@@ -1,34 +1,54 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { SaleProductService } from './sale_product.service';
 import { CreateSaleProductDto } from './dto/create-sale_product.dto';
 import { UpdateSaleProductDto } from './dto/update-sale_product.dto';
+import { PermissionGuard } from 'src/core/guard/permissionGuard';
+import { JwtAuthGuard } from 'src/core/guard/jwtGuard';
+import { UserPayload } from 'src/core/decoration/userPayload.decorator';
 
-@Controller('sale-product')
+@UseGuards(JwtAuthGuard, PermissionGuard)
+@Controller('v1/sale-product')
 export class SaleProductController {
   constructor(private readonly saleProductService: SaleProductService) {}
 
   @Post()
-  create(@Body() createSaleProductDto: CreateSaleProductDto) {
-    return this.saleProductService.create(createSaleProductDto);
+  create(
+    @UserPayload() auth,
+    @Body() createSaleProductDto: CreateSaleProductDto,
+  ) {
+    return this.saleProductService.create(createSaleProductDto, auth);
   }
 
   @Get()
-  findAll() {
-    return this.saleProductService.findAll();
+  findAll(@UserPayload() auth) {
+    return this.saleProductService.findAll(auth);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.saleProductService.findOne(+id);
+  findOne(@Param('id') id: string, @UserPayload() auth) {
+    return this.saleProductService.findOne(+id, auth);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSaleProductDto: UpdateSaleProductDto) {
-    return this.saleProductService.update(+id, updateSaleProductDto);
+  update(
+    @UserPayload() auth,
+    @Param('id') id: string,
+    @Body() updateSaleProductDto: UpdateSaleProductDto,
+  ) {
+    return this.saleProductService.update(+id, updateSaleProductDto, auth);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.saleProductService.remove(+id);
+  remove(@UserPayload() auth, @Param('id') id: string) {
+    return this.saleProductService.remove(+id, auth);
   }
 }

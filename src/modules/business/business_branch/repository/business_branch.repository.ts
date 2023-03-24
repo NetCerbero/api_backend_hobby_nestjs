@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { DataSource, Repository } from "typeorm";
+import { DataSource, EntityManager, In, Repository } from "typeorm";
 import { BusinessBranchEntity } from "../entities/business_branch.entity";
 
 export interface ParamsBusinessBranch{
@@ -60,5 +60,10 @@ export class BusinessBranchRepository extends Repository<BusinessBranchEntity>{
       }
 
       await query.execute();
+    }
+
+    async belongsToBusinessTransaction(manager:EntityManager,branchIds:number[],business:number){
+      const result = await manager.findBy(BusinessBranchEntity,{id:In(branchIds),businessId:business})
+      return result.length === branchIds.length;
     }
 }

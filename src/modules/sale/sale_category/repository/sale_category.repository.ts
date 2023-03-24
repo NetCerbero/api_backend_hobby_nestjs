@@ -1,11 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, EntityManager, In, Repository } from 'typeorm';
 import { SaleCategoryEntity } from '../entities/sale_category.entity';
 
 @Injectable()
 export class SaleCategoryRepository extends Repository<SaleCategoryEntity> {
   constructor(private dataSource: DataSource) {
     super(SaleCategoryEntity, dataSource.createEntityManager());
+  }
+
+  async belongsToBusinessTransaction(manager:EntityManager,categoryIds:number[],business:number){
+    const result = await manager.findBy(SaleCategoryEntity,{id:In(categoryIds),businessId:business})
+    return result.length === categoryIds.length;
   }
 
   async getListByBusiness(business?: number) {

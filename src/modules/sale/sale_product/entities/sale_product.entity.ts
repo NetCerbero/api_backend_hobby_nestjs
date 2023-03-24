@@ -23,8 +23,8 @@ export class SaleProductEntity extends BaseEntity {
     @Column({type:"varchar",length:100,nullable:true})
     sku: string;
 
-    @Column({type:"varchar",length:100, nullable:true})
-    description:string;
+    @Column({type:"varchar", name:"short_description",length:255, nullable:true})
+    shortDescription:string;
 
     @Column({type:"varchar",length:20,default:SaleProductTypeEnum.ALMACENABLE})
     type:string;

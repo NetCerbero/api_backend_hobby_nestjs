@@ -17,7 +17,7 @@ export class SaleProductBranchEntity extends BaseEntity {
     price: number
 
     @Column({ type: "bool", default:true,name:"is_active" })
-    isActive: string;
+    isActive: boolean;
 
     @CreateDateColumn({ type: 'timestamp', name: 'created_at', nullable: true })
     createdAt: Date;
