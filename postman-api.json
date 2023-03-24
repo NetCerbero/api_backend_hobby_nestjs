@@ -1,0 +1,463 @@
+{
+	"info": {
+		"_postman_id": "35031fe1-e4fe-4ea4-82b4-f07da28013d4",
+		"name": "TIENDA_ONLINE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "user create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test@gmail.com\",\n    \"displayName\": \"Luis\",\n    \"status\": \"ACTIVO\",\n    \"password\": \"123\",\n    \"business\": [\n        {\n            \"businessProfileId\": 1,\n            \"default\": true\n        }\n    ],\n    \"branches\": [\n        {\n            \"businessBranchId\": 4,\n            \"default\": true\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/user-account",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user-account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user read",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/user-account",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user-account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "auth login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"test@gmail.com\",\n    \"password\":\"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/user-auth/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user-auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "business",
+			"item": [
+				{
+					"name": "location read",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/business-location",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"business-location"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "location create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"MONTERO\",\n    \"default\":false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/business-location",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"business-location"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "branch create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"BlackStone TARIJA\",\n    \"address\":\"TARIJA\",\n    \"locationId\":1,\n    \"businessId\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/business-branch",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"business-branch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "branch read",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/business-branch",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"business-branch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tenantKey\":\"bluenet_23\",\n    \"tradeName\":\"Bluenet S.A.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/business-profile",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"business-profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile read",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/business-profile",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"business-profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "sale",
+			"item": [
+				{
+					"name": "category read",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/sale-category",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"sale-category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "category create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"SUB GRUPO\",\n    \"parentId\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/sale-category",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"sale-category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "category update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"RELOJ\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/sale-category/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"sale-category",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"displayName\":\"CARTERIA EN DOS SUCURSALES\",\n    \"type\":\"ALMACENABLE\",\n    \"isActive\":true,\n    \"canBeSold\":true,\n    \"canBeBought\":true,\n    \"categoryId\":1,\n    \"sku\":\"juanito_qr22c4\",\n    \"shortDescription\":\"LOS MEJORES RELOJES DE TU VIDA CHOQUITO\",\n    \"avaibleInBranch\":[\n        {\n            \"stock\":0,\n            \"price\":180.2,\n            \"isActive\":true,\n            \"branchId\":6\n        },\n         {\n            \"stock\":0,\n            \"price\":180.2,\n            \"isActive\":true,\n            \"branchId\":4\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/sale-product",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"sale-product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product read",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/sale-product",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"sale-product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product read one",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/sale-product/14",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"sale-product",
+								"14"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"displayName\":\"CARTERIA EN DOS SUCURSALES\",\n    \"type\":\"ALMACENABLE\",\n    \"isActive\":true,\n    \"canBeSold\":true,\n    \"canBeBought\":true,\n    \"categoryId\":2,\n    \"sku\":\"juanito_qr78\",\n    \"shortDescription\":\"LOS MEJORES RELOJES DE TU VIDA CHOQUITO\",\n    \"avaibleInBranch\":[\n        {\n            \"stock\":10,\n            \"price\":200,\n            \"isActive\":true,\n            \"branchId\":6\n        },\n         {\n            \"stock\":0,\n            \"price\":180.2,\n            \"isActive\":true,\n            \"branchId\":4\n        },\n        {\n            \"stock\":100,\n            \"price\":150,\n            \"isActive\":false,\n            \"branchId\":7\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/sale-product/14",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"sale-product",
+								"14"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"",
+					"pm.request.headers.add({key:\"X-Tenant-Id\",value: 1 })",
+					"pm.request.headers.add({key:\"X-Branch-Id\",value: 4 })"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://localhost:9090",
+			"type": "default"
+		},
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0IiwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSIsImRpc3BsYXlOYW1lIjoiTHVpcyIsInNlc3Npb25JZCI6IjlhYjhhZmY1LTM4YjgtNGNlNi1iMzViLTE3M2YzNWE3ZGFkNCIsImlhdCI6MTY3OTM0NDc1NCwiZXhwIjoxNjc5NDMxMTU0fQ.Ru7MvaRaCXdADmQVvbLa7_OjU1y2lVOu3zTlkRop-70",
+			"type": "default"
+		},
+		{
+			"key": "tenant",
+			"value": "1",
+			"type": "default"
+		},
+		{
+			"key": "branch",
+			"value": "4",
+			"type": "default"
+		}
+	]
+}
